@@ -18,11 +18,11 @@ class Clock(object):
       		self.minutes = total_minutes % 60
       		self.hour += round(total_minutes / 60)
       		
-      	if self.hour > 24:
-      		self.hour -= 24
+      	if self.hour >= 24:
+      		self.hour -= 23
       	
       	if self.hour <= 0:
-      		self.hour = 24
+      		self.hour += 23
     
     def __sub__(self, minutes):
     	minutes *= -1
@@ -37,26 +37,33 @@ class Clock(object):
 
 
 
-clock1 = Clock(12, 45)
+clock1 = Clock(23, 0)
 clock2 = Clock(12, 45)
 
 print clock1 == clock2
 print clock1 != clock2
 
-print "testing addition"
-clock1 + 60
+print "\ntesting addition"
+clock1 + 100
 print clock1.minutes
 print clock1.hour
 
-print "testing subtraction"
+print "\ntesting subtraction"
+clock1 - 100
+print clock1.minutes
+print clock1.hour
+
+print "\ntesting subtraction"
 clock2 - 5
 print "minutes: %s" % clock2.minutes
 print "hour: %s" %  clock2.hour
 
+print "\ntesting subtraction"
 clock2 - 65
 print "minutes: %s" % clock2.minutes
 print "hour: %s" %  clock2.hour
 
+print "\ntesting subtraction"
 clock3 = Clock(1, 5)
 clock3 - 60
 print "minutes: %s" % clock3.minutes
