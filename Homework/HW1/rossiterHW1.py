@@ -1,23 +1,63 @@
+import random
+
 class Portfolio(object):
 	
 	def __init__(self):
 		self.transactions = []
 		self.cash = 0
-		self.stocks = 0
-		self.mutualFunds = 0
+		self.stocks = {}
+		self.mutualFunds = {}
 	
 	def addCash(self, amount):
 		priorBalance = self.cash
 		self.cash += amount
-		transaction = "$%s added to account. Balance was $%s.  Balance is now $%s." % (amount, priorBalance, self.cash)
+		transaction = "$%s added. Prev balance: $%s. Existing balance: $%s." % (amount, priorBalance, self.cash)
 		self.transactions.append(transaction)
 	
 	def withdrawCash(self, amount):
 		priorBalance = self.cash
 		self.cash -= amount
-		transaction = "$%s withdrawn from account. Balance was $%s.  Balance is now $%s." % (amount, priorBalance, self.cash)
+		transaction = "$%s withdrawn. Prev balance: $%s. Existing balance: $%s." % (amount, priorBalance, self.cash)
 		self.transactions.append(transaction)
 		
+	def buyMutualFund(self, shares, mf):
+		if mf.symbol in self.mutualFunds.keys():
+			self.mutualFunds[mf.symbol] += shares
+		else:
+			self.mutualFunds[mf.symbol] = shares
+		transaction = "Purchasing %s shares of %s mutual fund at $1" % (shares, mf.symbol)
+		self.transactions.append(transaction)
+  		self.withdrawCash(shares)
+
+	def buyStock(self, shares, s):
+		if s.symbol in self.stocks.keys():
+			self.stocks[s.symbol] += shares
+		else:
+			self.stocks[s.symbol] = shares
+		transaction = "Purchasing %s shares of %s stock at $%s" % (shares, s.symbol, s.price)
+		self.transactions.append(transaction)
+  		self.withdrawCash(shares)
+  		
+  	def sellStock(self, shares, s):
+  		if s.symbol in self.stocks.keys():
+			self.stocks[s.symbol] -= shares
+		else:
+			raise Exception("Stock must exist in portfolio to sell.")
+		sell_price = round(random.uniform(0.5 * s.price , 1.5 * s.price), 2)
+		transaction = "Selling %s shares of %s stock at $%s" % (shares, s.symbol, sell_price)
+		self.transactions.append(transaction)
+  		self.addCash(sell_price * shares)
+  		
+  	def sellMutualFunds(self, shares, mf):
+  		if mf.symbol in self.mutualFunds.keys():
+			self.mutualFunds[mf.symbol] -= shares
+		else:
+			raise Exception("MutualFunds must exist in portfolio to sell.")
+		sell_price = round(random.uniform(0.9, 1.2), 2)
+		transaction = "Selling %s shares of %s mutual fund at $%s" % (shares, mf.symbol, sell_price)
+		self.transactions.append(transaction)
+  		self.addCash(sell_price * shares, 2)
+
 	def history(self):
 		print '\n'.join(portfolio.transactions)
 		
@@ -27,34 +67,43 @@ class Portfolio(object):
 		output += "Mutual Funds: %s \n" % self.mutualFunds
 		return output
 		
+		
 class MutualFund(object):
 
 	def __init__(self, symbol):
 		self.symbol = symbol
-
+	
 
 class Stock(object):
 
-	def __init__(self, symbol):
+	def __init__(self, price, symbol):
+		self.price = price
 		self.symbol = symbol
 		
 
+## TESTING ##
 portfolio = Portfolio()
 portfolio.addCash(300.50)
 portfolio.withdrawCash(200)
+
+s = Stock(20, "HFH")
+s2 = Stock(10, "ABC")
+mf1 = MutualFund("BRT")
+mf2 = MutualFund("GHT")
+
+
+portfolio.buyStock(5, s)
+portfolio.buyStock(2, s)
+portfolio.buyMutualFund(10.3, mf1)
+portfolio.buyMutualFund(2, mf2)
+portfolio.buyMutualFund(5, mf2)
+
+portfolio.sellStock(1, s)
+
+#portfolio.sellStock(1, s2) #throws an error
+
 portfolio.history()
 print portfolio
 
 
-# 	def buy(self):
-# 		lakdjfk
-# 	
-# 	def sell(self):
-# 		slkflsdf
-# 
-# 
-
-# 
-# class MutualFund(object):
-		
 		
