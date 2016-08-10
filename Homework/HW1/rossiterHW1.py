@@ -15,6 +15,8 @@ class Portfolio(object):
 		self.transactions.append(transaction)
 	
 	def withdrawCash(self, amount):
+		if self.cash - amount < 0:
+			raise Exception("Account does not have sufficient funds.")
 		priorBalance = self.cash
 		self.cash -= amount
 		transaction = "$%s withdrawn. Prev balance: $%s. Existing balance: $%s." % (amount, priorBalance, self.cash)
@@ -66,6 +68,8 @@ class Portfolio(object):
 		output += "Stocks: %s \n" % self.stocks
 		output += "Mutual Funds: %s \n" % self.mutualFunds
 		return output
+	
+#	def __repr__(self):
 		
 		
 class MutualFund(object):
@@ -100,10 +104,13 @@ portfolio.buyMutualFund(5, mf2)
 
 portfolio.sellStock(1, s)
 
-#portfolio.sellStock(1, s2) #throws an error
+## Both of these throw errors as expected.
+#portfolio.sellStock(1, s2) 
+#portfolio.buyStock(1000, s)
 
 portfolio.history()
 print portfolio
+portfolio
 
 
 		
