@@ -37,8 +37,12 @@ rare_burger=Burger("beef","rare",0.25,["cheese"],"bread")
 
 class VeggieBurger(Burger):
     def __init__(self, toppings_ordered, container):
+    	## when initializing, you're calling burger initialization
+    	## but using presets for some arguments
+    	## subclass only needs the 2 arguments 
         Burger.__init__(self,"veggie patty", "medium", 0.25, toppings_ordered, container)
 
+	## burger uses this version of toppings allowed...
     def toppings_allowed(self, attempted_toppings):
         allowed_toppings = ["cheese", "tomato", "onion", "lettuce"]
         toppings=[]

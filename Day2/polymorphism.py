@@ -1,11 +1,15 @@
 class Animal(object):
   living="Yes!"
+  
   def __init__(self, name):    # Constructor of the class
       self.name = name
       
   def talk(self):              # Abstract method, defined by convention only
   	raise NotImplementedError("Subclass must implement abstract method")
   	 
+  	 
+
+
 class Cat(Animal):
   def talk(self):
     return self.meow()
@@ -31,10 +35,19 @@ class Fish(Animal):
 animals = [Cat('Foo'),
            Dog('Bar'),
            Fish('nemo')]
+           
+#for animal in animals: print animal.name
+#for animal in animals: print animal.talk()
+#for animal in animals: print animal
+           
+mycat = Cat("Lenoard")
+print mycat.talk()
+print mycat.living
+
+myfish = Fish("Nemo")
+#print myfish.talk()
  
-for animal in animals: print animal.name
-for animal in animals: print animal.talk()
-for animal in animals: print animal
+
 
 # Copyright (c) 2014 Matt Dickenson
 # 
