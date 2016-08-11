@@ -32,6 +32,9 @@ class Portfolio(object):
   		self.withdrawCash(shares)
 
 	def buyStock(self, shares, s):
+	  	if not isinstance(shares, int):
+  			raise TypeError("Shares to buy must be an integer")
+	
 		if s.symbol in self.stocks.keys():
 			self.stocks[s.symbol] += shares
 		else:
@@ -41,6 +44,9 @@ class Portfolio(object):
   		self.withdrawCash(shares)
   		
   	def sellStock(self, shares, s):
+  		if not isinstance(shares, int):
+  			raise TypeError("Shares to sell must be an integer")
+  			
   		if s.symbol in self.stocks.keys():
 			self.stocks[s.symbol] -= shares
 		else:
@@ -54,7 +60,7 @@ class Portfolio(object):
   		if mf.symbol in self.mutualFunds.keys():
 			self.mutualFunds[mf.symbol] -= shares
 		else:
-			raise Exception("MutualFunds must exist in portfolio to sell.")
+			raise Exception("Mutual Fund must exist in portfolio to sell.")
 		sell_price = round(random.uniform(0.9, 1.2), 2)
 		transaction = "Selling %s shares of %s mutual fund at $%s" % (shares, mf.symbol, sell_price)
 		self.transactions.append(transaction)
@@ -68,9 +74,6 @@ class Portfolio(object):
 		output += "Stocks: %s \n" % self.stocks
 		output += "Mutual Funds: %s \n" % self.mutualFunds
 		return output
-	
-#	def __repr__(self):
-		
 		
 class MutualFund(object):
 
@@ -104,8 +107,10 @@ portfolio.buyMutualFund(5, mf2)
 
 portfolio.sellStock(1, s)
 
-## Both of these throw errors as expected.
+## All of these throw errors as expected.
 #portfolio.sellStock(1, s2) 
+#portfolio.sellStock(1.5, s2)
+#portfolio.buyStock(1.5, s2)
 #portfolio.buyStock(1000, s)
 
 portfolio.history()
