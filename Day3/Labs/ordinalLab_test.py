@@ -13,6 +13,11 @@ class ordinalTest(unittest.TestCase):
 		self.assertNotEqual('10st', ordinalFunc(10))
 		self.assertNotEqual('2th', ordinalFunc(2))
 		self.assertNotEqual('3', ordinalFunc(3))
+		
+	def test_bigNums(self):
+		self.assertEqual('11th', ordinalFunc(11))
+		self.assertEqual('213th', ordinalFunc(213))
+		self.assertEqual('301st', ordinalFunc(301))
 	
 	def test_input(self):
 		ar = ["a", "b"]
