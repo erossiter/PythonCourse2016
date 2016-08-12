@@ -2,11 +2,12 @@ import string
 #write a custom exception, then an inclusive test, then write the code for the following functions:
 
 
-class stringException(Exception): # inherits from Exception
+class stringException(Exception):
   def __init__(self, value):
     Exception.__init__(self, "%s is not text!" %value)
+
     
-class multipleWordException(Exception): # inherits from Exception
+class multipleWordException(Exception):
   def __init__(self, value):
     Exception.__init__(self, "%s is only one word!" %value)
       
@@ -51,8 +52,7 @@ def piglatin(txt):
 		output.append(w)
 	return ' '.join(output)
 
-		
-		
+				
 		
 		
 			

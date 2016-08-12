@@ -27,3 +27,4 @@ class ordinalTest(unittest.TestCase):
   
 if __name__ == '__main__': #Add this if you want to run the test with this script.
   unittest.main()
+

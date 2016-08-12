@@ -1,5 +1,12 @@
 import random
 
+class exceedsPortfolioException(Exception): # inherits from Exception
+  def __init__(self, value):
+    self.value = value
+      
+  def __str__(self):
+    return self.value
+
 class Portfolio(object):
 	def __init__(self):
 		self.transactions = []
@@ -58,7 +65,7 @@ class Portfolio(object):
 		return output
 
 	def __repr__(self):
-		return self.__str__
+		return self.__str__()
 
 
 ## 'Asset' class allows for other asset classes, such as bonds,
@@ -96,9 +103,12 @@ class MutualFund(Asset):
   	## then rounding by 2 to represent a real $$ value.
   	def sell(self, portfolio, shares):
   		if self.symbol in portfolio.mutualFunds.keys():
-			portfolio.mutualFunds[self.symbol] -= shares
+			if portfolio.mutualFunds[self.symbol] - shares < 0:
+				raise exceedsPortfolioException("Shares to sell exceeds shares held in portfolio.")
+			else:
+				portfolio.mutualFunds[self.symbol] -= shares	
 		else:
-			raise Exception("Mutual Fund must exist in portfolio to sell.")
+			raise exceedsPortfolioException("Mutual Fund must exist in portfolio to sell.")
 		sell_price = round(random.uniform(0.9, 1.2), 2)
 		transaction = "Selling %s shares of %s mutual fund at $%s/share" % (shares, self.symbol, sell_price)
 		portfolio.transactions.append(transaction)
@@ -108,7 +118,7 @@ class MutualFund(Asset):
 		return "Mutual fund %s can be purchased at $%s/share." % (self.symbol, self.price)
 	
 	def __repr__(self):
-		return self.__str__
+		return self.__str__()
 	
 
 class Stock(Asset):
@@ -129,11 +139,16 @@ class Stock(Asset):
   	def sell(self, portfolio, shares):
   		if not isinstance(shares, int):
   			raise TypeError("Shares to sell must be an integer")
-  			
+  		
+  		## if portfolio doesn't hold stock or if user tries to
+  		## sell more than they held, an error is raised	(same with MF)
   		if self.symbol in portfolio.stocks.keys():
-			portfolio.stocks[self.symbol] -= shares
+			if portfolio.stocks[self.symbol] - shares < 0:
+				raise exceedsPortfolioException("Shares to sell exceeds shares held in portfolio.")	
+			else:
+				portfolio.stocks[self.symbol] -= shares
 		else:
-			raise Exception("Stock must exist in portfolio to sell.")
+			raise exceedsPortfolioException("Stock must exist in portfolio to sell.")
 		sell_price = round(random.uniform(0.5 * self.price , 1.5 * self.price), 2)
 		transaction = "Selling %s shares of %s stock at $%s/share" % (shares, self.symbol, sell_price)
 		portfolio.transactions.append(transaction)
@@ -143,7 +158,7 @@ class Stock(Asset):
 		return "Stock %s can be purchased at $%s/share." % (self.symbol, self.price)
 
 	def __repr__(self):
-		return self.__str__
+		return self.__str__()
 
 		
 
@@ -162,6 +177,7 @@ s = Stock(20, "HFH")
 s2 = Stock(10, "ABC")
 mf1 = MutualFund("BRT")
 mf2 = MutualFund("GHT")
+mf3 = MutualFund("DJD")
 
 print s2
 print mf2
@@ -172,15 +188,18 @@ portfolio.buyStock(3, s2)
 portfolio.buyMutualFund(10, mf1)
 portfolio.buyMutualFund(2, mf2)
 portfolio.buyMutualFund(5, mf2)
+
  
 portfolio.sellStock(1, s)
 portfolio.sellMutualFund(1, mf1)
 
 ## All of these throw errors as expected.
-#portfolio.sellStock(1, s2) 
+#portfolio.sellStock(7, s2) 
 #portfolio.sellStock(1.5, s2)
 #portfolio.buyStock(1.5, s2)
 #portfolio.buyStock(1000, s)
+#portfolio.sellMutualFund(1, mf3)
+#portfolio.sellMutualFund(10, mf2)
 
 portfolio.history()
 print portfolio

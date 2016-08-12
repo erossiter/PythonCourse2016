@@ -12,10 +12,13 @@ class Individual(object):
   def __init__(self, ideology):
     self.ideology = ideology
 
+
 class Voter(Individual):
   def __init__(self, ideology): 
     Individual.__init__(self, ideology)
-  # TODO: have a voter tell you their ideology
+  
+  def __str__(self):
+  	return "%s ideology" % self.ideology
 
 
 class Candidate(Individual):
@@ -33,7 +36,6 @@ class Candidate(Individual):
 
   def update_ideology(self, ballot):
     return self.ideology 
-    # TODO:  make this method work! 
 
 
 class Polity(object):
@@ -41,7 +43,8 @@ class Polity(object):
     self.voters = []
     self.candidates = []
 
-  # TODO: have a polity print count of candidates and voters
+  def __str__(self):
+  	return "%s candidates, %s voters" % (len(candidates), len(voters))
 
   def populate(self, count):
     for i in range(count):
@@ -70,8 +73,9 @@ class Polity(object):
       print candidate, ":", candidate.report_ideology()
 
   def update_candidate_ideologies(self, ballot):
-    return 
-    # TODO: call the update_ideology method for each candidate
+    for i in range(0, len(self.candidates)):
+      candidate = self.candidates[i]
+      self.candidates[i] = candidate.report_ideology()
 
 
 def print_winner(winner):
@@ -95,10 +99,10 @@ def election(polity):
 right = Candidate(.55, "right")
 left = Candidate(.45, "left")
 slightly_left = Candidate(.4, "slightly left")
-# TODO: initialize very left party with ideology .1
-#       and a stone dead party with ideology .01 
+very_left = Candidate(.1, "very left")
+stone_dead = Candidate(.01, "stone dead")
 
-print right, left, slightly_left
+print right, left, slightly_left, very_left, stone_dead
 
 # Create and populate polity
 jefferson = Polity()
@@ -108,7 +112,8 @@ jefferson.populate(100)
 jefferson.nominate(right)
 jefferson.nominate(left)
 jefferson.nominate(slightly_left)
-# don't forget to nominate your new candidates! 
+jefferson.nominate(very_left)
+jefferson.nominate(stone_dead)
 
 print jefferson 
 
@@ -116,6 +121,9 @@ print jefferson
 winner = election(jefferson)
 
 # TODO: keep holding elections until the right party loses 
+while(election(jefferson) < 50):
+	print winner
+
 
 ### Suggested task order ###
 ### 1. implement missing print methods in Voter and Polity
