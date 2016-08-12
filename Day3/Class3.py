@@ -1,5 +1,5 @@
-raise Exception
-print "I raised an exception!"
+#raise Exception
+#print "I raised an exception!"
 
 try:
 	print b

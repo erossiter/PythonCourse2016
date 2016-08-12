@@ -15,8 +15,8 @@ class FizzBuzzTest(unittest.TestCase):
 	def test_fizzbuzz(self):
 		self.assertEqual('FizzBuzz',fizzbuzz.FizzBuzz(15))
 	
-	def test_string(self):
-		self.assertEqual("Enter a number!",fizzbuzz.FizzBuzz('b'))
+	#def test_string(self):
+	#	self.assertEqual("Enter a number!",fizzbuzz.FizzBuzz('b'))
   
 if __name__ == '__main__': #Add this if you want to run the test with this script.
   unittest.main()

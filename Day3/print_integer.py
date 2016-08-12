@@ -10,6 +10,7 @@ def print_integer(integer):
 		print "Here is my integer: " + str(integer)
 
 def print_integer(integer):
+	#could also do isinstance(b, int)
 	if type(integer)==int:
 		print "Here is my integer: " + str(integer)
 	else:
