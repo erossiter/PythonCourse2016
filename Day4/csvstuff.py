@@ -1,6 +1,7 @@
 import csv
 
 #Open a file stream and create a CSV writer object
+#"wb" is write bytes?
 f = open('test.csv', 'wb')
 my_writer = csv.writer(f)
 
@@ -16,7 +17,8 @@ with open('test1.csv', 'wb') as f:
   for i in range(1, 100):
     my_writer.writerow([i, i-1])
     
-#How about with field names
+#How about with field names/column names
+# "wb" =  write bytes
 with open('test_with_fields.csv', 'wb') as f:
   my_writer = csv.DictWriter(f, fieldnames=("A", "B"))
   my_writer.writeheader()
@@ -26,6 +28,7 @@ with open('test_with_fields.csv', 'wb') as f:
     
 
 #Now lets read some things
+# "rb" = read bytes
 with open('test.csv', 'rb') as f:
   print "Reading test1.csv"
   my_reader = csv.reader(f)
