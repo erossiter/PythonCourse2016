@@ -23,19 +23,12 @@ with open('profs.csv', 'wb') as f:
 	all_html = BeautifulSoup(web_page.read())
 	all_div = all_html.find_all("div")
 
-	specializations = []
-	titles = []
-	emails = []
-	web_pages = []
-	names = []
-	extensions = []
 	for i in range(49, 85):
-		extensions.append(all_div[i].find('a')['href'])
-		titles.append(all_div[i].contents[2])
-		names.append(all_div[i].find('a').get_text())
+		extension = all_div[i].find('a')['href']
+		title = all_div[i].contents[2]
+		name = all_div[i].find('a').get_text()
 
-	for prof in extensions:
-		prof_address = 'https://polisci.wustl.edu%s' % prof
+		prof_address = 'https://polisci.wustl.edu%s' % extension
 		prof_page = urllib2.urlopen(prof_address)
 		prof_html = BeautifulSoup(prof_page.read())
 
@@ -43,15 +36,15 @@ with open('profs.csv', 'wb') as f:
 		check_these_a = check_this_div.find_all("div", {"class" : "field-item even"})
 		for a in check_these_a:
 			if a.find("a", href=True):
-				emails.append(a.get_text())
+				email = a.get_text()
 			else:
-				emails.append("NA")
+				email = "NA"
 
 		check_this_div = prof_html.find("div", {"class" : "field field-name-field-person-website field-type-link-field field-label-inline clearfix"})
 		if check_this_div:
-			web_pages.append(check_this_div.find("a", href=True)['href'])
+			web_page = check_this_div.find("a", href=True)['href']
 		else:
-			web_pages.append("NA")
+			web_page = "NA"
 
 
 		results = prof_html.find_all("a", {"property" : "rdfs:label skos:prefLabel"})
@@ -61,10 +54,9 @@ with open('profs.csv', 'wb') as f:
 			fields = ["Political Theory", "American", "Methodology", "Comparative", "International Political Economy", "Formal Theory"]
 			if r in fields:
 				add_fields.append(r)
-		specializations.append(", ".join(add_fields))
+		specialization = ", ".join(add_fields)
 
-  	for i in range(0, len(names)):
-  		w.writerow({"Name" : names[i], "Specialization" : specializations[i], "Title" : titles[i], "E-mail" : emails[i], "Web page" : web_pages[i]})
+  		w.writerow({"Name" : name, "Specialization" : specialization, "Title" : title, "E-mail" : email, "Web page" : web_page})
 
 
 	
