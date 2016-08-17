@@ -13,7 +13,7 @@ import time
 #api = tweepy.API(auth)
 
 import imp
-twitt = imp.load_source('summer2016', '/Users/erinrossiter/Dropbox/Summer2016/googleKeys.py')
+twitt = imp.load_source('summer2016', '../../twitterKeys.py')
 twitt.api
 
 
@@ -87,9 +87,6 @@ finally:
 	
 ###If you are running code, this time.sleep will not gaurantee you don't go over the limit.
 # Exercise: write generic code that will never break (this will be very helpful for everything you do, including the homework)
-
-
-
 
 
 
