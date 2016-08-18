@@ -31,5 +31,7 @@ getTable <- function(link, page_nums){
 
 xx <- getTable(links[10], page_nums)
 
+extract_areas(links[10], pages = 10)
+
 
 
