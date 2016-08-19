@@ -2,6 +2,7 @@
 #https://console.developers.google.com/apis/credentials?project=_
 #need maps and distance APIs enabled
 import googlemaps
+<<<<<<< HEAD
 
 import imp
 gmaps = imp.load_source('gmap', '../../googleKeys.py')
@@ -9,6 +10,10 @@ gmaps = imp.load_source('gmap', '../../googleKeys.py')
 
 
 #gmaps = googlemaps.Client(api_key)
+=======
+api_key = 'your api key from developers.google.com'
+gmaps = googlemaps.Client(api_key)
+>>>>>>> carlson9/master
 dir(gmaps)
 whitehouse = '1600 Pennsylvania Avenue, Washington, DC'
 location=gmaps.geocode(whitehouse)

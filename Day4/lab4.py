@@ -12,6 +12,7 @@ import urllib2
 import csv 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 from bs4 import BeautifulSoup
 import urllib2
 import re
@@ -68,6 +69,8 @@ with open('profs.csv', 'wb') as f:
 
 	
 =======
+=======
+>>>>>>> carlson9/master
 web_address='https://polisci.wustl.edu/faculty/specialization'
 web_page = urllib2.urlopen(web_address)
 soup = BeautifulSoup(web_page.read())
@@ -125,4 +128,7 @@ f.close()
 				
 				
 				
+<<<<<<< HEAD
+>>>>>>> carlson9/master
+=======
 >>>>>>> carlson9/master
