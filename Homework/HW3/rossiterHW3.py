@@ -6,7 +6,6 @@ import math
 twitt = imp.load_source('summer2016', '../../../twitterKeys.py')
 twitt.api
 
-
 ## Function that finds all followers/friends of a given user.
 ## This function is used by 'two_degree_search()'
 def search_one(user, command):
@@ -20,8 +19,6 @@ def search_one(user, command):
 			except tweepy.RateLimitError:
 				time.sleep(1)
 	return master_list
-
-
 
 ## Function to generate a master list of followers/friends
 ## from a list of user objects
@@ -39,8 +36,6 @@ def two_degree_search(user_list, command):
 				continue
 	return master_list
 
-
-
 ## Function to be flexible to find, among a list of twitter
 ## users, who is the most active/popular/etc.
 def user_activity(user_list, command):
@@ -49,7 +44,6 @@ def user_activity(user_list, command):
 		total.append(eval(command))
 	index = total.index(max(total))
 	return user_list[index].id, user_list[index].name
-
 
 ## Function to categorize a list of user objects
 def categorize_users(user_list):
@@ -64,7 +58,6 @@ def categorize_users(user_list):
 		else:
 			expert.append(u)
 	return layman, expert, celebrity
-
 
 def answers():
 	target_account = twitt.api.get_user("KittensCam")
@@ -94,13 +87,12 @@ def answers():
 	cat_followers_layman, cat_followers_expert, cat_followers_celebrity = categorize_users(cat_followers)
 	master_list_followers = two_degree_search((cat_followers_layman + cat_followers_expert), "twitt.api.followers")
 	all_followers_layman, all_followers_expert, all_followers_celebrity = categorize_users(master_list_followers)
-	print user_activity((all_followers_layman + all_followers_expert), "u.statuses_count")
+	print user_activity((all_followers_layman + all_followers_expert)[1:4], "u.statuses_count")
 
 	print "\nAmong the friends of your target and their friends, who is the most active?"
 	master_list_friends = two_degree_search((cat_friends_layman + cat_friends_expert), "twitt.api.followers")
 	all_friends_layman, all_friends_expert, all_friends_celebrity = categorize_users(master_list_friends)
-	print user_activity((all_friends_layman + all_friends_expert), "u.statuses_count")
-	
+	print user_activity((all_friends_layman + all_friends_expert)[1:4], "u.statuses_count")
 
 answers()
 
