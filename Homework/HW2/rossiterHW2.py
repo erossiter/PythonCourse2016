@@ -8,7 +8,10 @@ import csv
 def createRow(link, text, judge_html, page):
 	## getting link to pdf
 	doc_in_this_div = judge_html.find("div", {"id" : "ContentW"})
-	doc_link = doc_in_this_div.find("a", {"class" : "tbprint"})["href"]
+	try:
+		doc_link = doc_in_this_div.find("a", {"class" : "tbprint"})["href"]
+	except:
+		doc_link = "NA"
 
 	## getting name of judge
 	name = link.replace("http://www.judicialwatch.org/document-archive/", "")
@@ -18,7 +21,10 @@ def createRow(link, text, judge_html, page):
 
 	## getting year of report
 	year = re.findall(r'\d+', link)
-	year = int(year[0])
+	try:
+		year = int(year[0])
+	except:
+		year = 0
 
 	row = ({"Page" : page, "LinktoDoc" : doc_link, "Name": name, "Year" : year, "Text" : text })
 	return row
@@ -42,16 +48,19 @@ def getJudgeText(link):
 	## treating it as one string, but as a .txt file,
 	## I can read in lines and find sections better w/in
 	## the text.
-	write_temp_file = open("output.txt", "w")
-	write_temp_file.write(text)
-	write_temp_file.close()
+	#write_temp_file = open("output.txt", "w")
+	#try:
+	#	write_temp_file.write(text)
+	#except:
+	#	write_temp_file.write("NA")
+	#write_temp_file.close()
 
-	read_temp_file = open("output.txt", "r")
-	lines = read_temp_file.readlines()
+	#read_temp_file = open("output.txt", "r")
+	#lines = read_temp_file.readlines()
 	text_list = []
-	for l in lines:
-		text_list.append(l)
-	read_temp_file.close()
+	#for l in lines:
+	#	text_list.append(l)
+	#read_temp_file.close()
 
 	return judge_html, text_list
 
@@ -70,14 +79,14 @@ def getPageLinks(web_page):
 
 
 def main():
-	with open('judicialWatch.csv', 'wb') as g:
+	with open('judicialWatch.csv', 'ab') as g:
 		## Setting up csv.  Not sure what I want to do with data,
 		## so I collect info I might need in future.
 		w = csv.DictWriter(g, fieldnames=("Page", "LinktoDoc", "Name", "Year", "Text"))
 		w.writeheader()
 		## I saw in source that there are 1316 pages.  This
 		## was by far the best way to thoroughly get all available data.
-		for page in range(1, 1317):
+		for page in range(1187, 1317):
 			start_address = "http://www.judicialwatch.org/judicial-financial-disclosure/page/%s/" % page
 			web_page = urllib2.urlopen(start_address)
 			page_links = getPageLinks(web_page)
