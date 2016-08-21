@@ -1,15 +1,48 @@
 import tweepy
 import time
 import imp
+import math
 
 twitt = imp.load_source('summer2016', '../../../twitterKeys.py')
 twitt.api
 
 
+## Function that finds all followers/friends of a given user.
+## This function is used by 'two_degree_search()'
+def search_one(user, command):
+	master_list = []
+	for page in tweepy.Cursor(eval(command), user.screen_name).pages():
+		not_finished = True
+		while not_finished:
+			try:
+				master_list.extend(page)
+				not_finished = False
+			except tweepy.RateLimitError:
+				time.sleep(1)
+	return master_list
 
-## Among a list of twitter users, who is the most _____.
-## 'command' must be ascertained by comparing elements of 
-## user objects?
+
+
+## Function to generate a master list of followers/friends
+## from a list of user objects
+def two_degree_search(user_list, command):
+	master_list = []
+	for u in user_list:
+		not_finished = True
+		while not_finished:
+			try:
+				master_list.extend(search_one(u, command))
+				not_finished = False
+			except tweepy.RateLimitError:
+				time.sleep(1)
+			except tweepy.TweepError:
+				continue
+	return master_list
+
+
+
+## Function to be flexible to find, among a list of twitter
+## users, who is the most active/popular/etc.
 def user_activity(user_list, command):
 	total = []
 	for u in user_list:
@@ -33,32 +66,43 @@ def categorize_users(user_list):
 	return layman, expert, celebrity
 
 
-def main():
-	## Target twitter user
+def answers():
 	target_account = twitt.api.get_user("KittensCam")
  
 	## Getting follower and friend object lists
 	cat_followers = twitt.api.followers(target_account.id, count = 100)
 	cat_friends = twitt.api.friends(target_account.id, count = 100)
 
-	## Among the followers of your target who is the most active?
+	## One degree of separation ##
+	print "Among the followers of your target who is the most active?"
 	print user_activity(cat_followers, "u.statuses_count")
 
-	## Among the followers of your target who is the most popular,
-	## i.e. has the greatest number of followers?
+	print "\nAmong the followers of your target who is the most popular?"
 	print user_activity(cat_followers, "u.followers_count")
 
-	## Among the friends of your target, i.e. the users she is
-	## following, who are the most active layman, expert and celebrity?
-	layman, expert, celebrity = categorize_users(cat_friends)
-	print user_activity(layman, "u.statuses_count")
-	print user_activity(expert, "u.statuses_count")
-	print user_activity(celebrity, "u.statuses_count")
+	print "\nAmong the friends of your target, who are the most active layman, expert and celebrity?"
+	cat_friends_layman, cat_friends_expert, cat_friends_celebrity = categorize_users(cat_friends)
+	print user_activity(cat_friends_layman, "u.statuses_count")
+	print user_activity(cat_friends_expert, "u.statuses_count")
+	print user_activity(cat_friends_celebrity, "u.statuses_count")
 
-	## Among the friends of your target who is the most popular?
+	print "\nAmong the friends of your target who is the most popular?"
 	print user_activity(cat_friends, "u.followers_count")
 
-main()
+	## Two degrees of separation ##
+	print "\nAmong the followers of your target and their followers, who is the most active?"
+	cat_followers_layman, cat_followers_expert, cat_followers_celebrity = categorize_users(cat_followers)
+	master_list_followers = two_degree_search((cat_followers_layman + cat_followers_expert), "twitt.api.followers")
+	all_followers_layman, all_followers_expert, all_followers_celebrity = categorize_users(master_list_followers)
+	print user_activity((all_followers_layman + all_followers_expert), "u.statuses_count")
+
+	print "\nAmong the friends of your target and their friends, who is the most active?"
+	master_list_friends = two_degree_search((cat_friends_layman + cat_friends_expert), "twitt.api.followers")
+	all_friends_layman, all_friends_expert, all_friends_celebrity = categorize_users(master_list_friends)
+	print user_activity((all_friends_layman + all_friends_expert), "u.statuses_count")
+	
+
+answers()
 
 	
 
