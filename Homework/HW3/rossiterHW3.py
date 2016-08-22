@@ -34,7 +34,7 @@ def two_degree_search(user_list, command):
 			except tweepy.RateLimitError:
 				time.sleep(1)
 			except tweepy.TweepError:
-				continue
+				not_finished = False
 	return master_list
 
 ## Function to be flexible to find, among a list of twitter
@@ -91,7 +91,7 @@ def answers():
 	print user_activity((all_followers_layman + all_followers_expert), "u.statuses_count")
 
 	print "\nAmong the friends of your target and their friends, who is the most active?"
-	master_list_friends = two_degree_search((cat_friends_layman + cat_friends_expert), "twitt.api.followers")
+	master_list_friends = two_degree_search((cat_friends_layman + cat_friends_expert), "twitt.api.friends")
 	all_friends_layman, all_friends_expert, all_friends_celebrity = categorize_users(master_list_friends)
 	print user_activity((all_friends_layman + all_friends_expert), "u.statuses_count")
 
