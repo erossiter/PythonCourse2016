@@ -96,16 +96,9 @@ def answers():
 	print user_activity((all_friends_layman + all_friends_expert), "u.statuses_count")
 
 
-#answers()
+answers()
 
-for i in range(0, 100):
-	not_finished = True
-	while not_finished:
-		try:
-			answers()
-			not_finished = False
-		except tweepy.RateLimitError:
-			time.sleep(1)
+
 
 	
 
