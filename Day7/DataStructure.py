@@ -130,7 +130,7 @@ class Node():
 		else: return "Node value: %s" %self.value	
 	
 class Tree():
-	def __init__(self,root=None):
+	def __init__(self, root=None):
 		self.root=root
 		self.branches=[[root]]
 		
