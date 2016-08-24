@@ -1,6 +1,12 @@
+class emptyListException(Exception):
+  def __init__(self):
+    Exception.__init__(self, "List must be non-empty.")
 
-## complexity: O(n^2)
+
+## complexity worst case: O(n^2)
 def insertion_sort(x):
+	if len(x) == 0:
+		raise emptyListException()
 	for i in range(1, len(x)):
 		val = x[i]
 		pos = i
@@ -9,16 +15,7 @@ def insertion_sort(x):
 			pos -= 1
 	return x
 
-a = [4, 3, 2, 1, 10, 2, 12 ]
-b = [1]
-c = range(100)
-random.shuffle(c)
-
-insertion_sort(a)
-insertion_sort(b)
-insertion_sort(c)
-
-
+## complexity worst case: O(n log n)
 def combine(x1, x2):
 	## 1 element lists
 	if len(x1) == 1 and len(x2) == 1:
@@ -49,6 +46,8 @@ def combine(x1, x2):
 
 
 def merge_sort(x):
+	if len(x) == 0:
+		raise emptyListException()
 	if len(x) == 1:
 		return x
 	else:
@@ -56,26 +55,3 @@ def merge_sort(x):
 		x1 = merge_sort(x[mid: ])
 		x2 = merge_sort(x[ :mid])
 		return combine(x1, x2)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
