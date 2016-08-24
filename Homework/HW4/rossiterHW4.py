@@ -20,27 +20,32 @@ insertion_sort(c)
 
 
 def combine(x1, x2):
+	## 1 element lists
 	if len(x1) == 1 and len(x2) == 1:
 		if x1 < x2:
 			out = x1 + x2
 		else:
 			out = x2 + x1
+	## when lists can simply be concatenated
 	if x2[-1] < x1[0]:
 		out = x2 + x1
 	elif x1[-1] < x2[0]:
 		out = x1 + x2
+	## when elements need to be merged
 	else:
+		out = x1
 		for i in range(0, len(x2)):
+			inc_index = 0
 			for j in range(0, len(x1)):
 				if x2[i] > x1[j]:
 					continue
 				else:
-					x1.insert(j, x2[i])
-		out = x1
+					out.insert(j + inc_index, x2[i])
+					inc_index += 1
+					break
+			else:
+				out.append(x2[i])
 	return out
-	
-
-[4,6,8]  [5,7,9]
 
 
 def merge_sort(x):
