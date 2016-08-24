@@ -41,18 +41,18 @@ def combine(x1, x2):
 
 
 
-def merge_sort(x1, x2 = []):
-	if len(x1) == 1:
-		return x1,
-	mid = len(x1)/2
-	x2 = x1[mid: ]
-	x1 = x1[ :mid]
-	x = [x1, x2]
-	#while len(x1) != 1:
+def merge_sort(x):
+	if len(x) == 1:
+		return x
+	mid = len(x)/2
+	x1 = x[mid: ]
+	x2 = x[ :mid]
 	print x1
 	print x2
 	print " "
-	return merge_sort(x1, x2)
+	ms_x1 = merge_sort(x1)
+	ms_x2 = merge_sort(x2)
+	#combine(ms_x1, ms_x2)
 
 
 	#	return merge_sort(x2)
