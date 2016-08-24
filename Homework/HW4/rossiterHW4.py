@@ -25,17 +25,22 @@ def combine(x1, x2):
 			out = x1 + x2
 		else:
 			out = x2 + x1
+	if x2[-1] < x1[0]:
+		out = x2 + x1
+	elif x1[-1] < x2[0]:
+		out = x1 + x2
 	else:
-		## if the last element of the bigger list
-		## is smaller than the first element of the
-		## smaller list, then put it first
-		if x2[-1] < x1[0]:
-			out = x2 + x1
-		if x2[0] > x1[-1]:
-			out = x1 + x2
-		#if x2[0] > x1[0] and x2[-1] < x1[-1]: 
+		for i in range(0, len(x2)):
+			for j in range(0, len(x1)):
+				if x2[i] > x1[j]:
+					continue
+				else:
+					x1.insert(j, x2[i])
+		out = x1
 	return out
+	
 
+[4,6,8]  [5,7,9]
 
 
 def merge_sort(x):
@@ -43,24 +48,9 @@ def merge_sort(x):
 		return x
 	else:
 		mid = len(x)/2
-		x1 = x[mid: ]
-		x2 = x[ :mid]
-		x1 = merge_sort(x1)
-		x2 = merge_sort(x2)
+		x1 = merge_sort(x[mid: ])
+		x2 = merge_sort(x[ :mid])
 		return combine(x1, x2)
-	#print ms_x1
-	#print ms_x2
-	#combine(ms_x1, ms_x2)
-
-
-	#	return merge_sort(x2)
-		#return combine(x1, x2)
-	
-	#mid = len(x)/2
-	#x1 = x[ :mid]
-	#x2 = x[mid: ]
-	#return merge_sort(x1, x2)
-	#return merge_sort(x2)
 
 
 
