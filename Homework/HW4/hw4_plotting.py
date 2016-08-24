@@ -7,4 +7,6 @@ plt.plot(x, ms_avg)
 plt.legend(['insertion sort', 'merge sort'], loc = "upper left")
 plt.ylabel("Average Time for 100 samples")
 plt.xlabel("Size of sample")
-plt.show()
+plt.title("The Effect of Different Sort Algorithms on Runtime")
+
+plt.savefig('hw_plot.pdf')
