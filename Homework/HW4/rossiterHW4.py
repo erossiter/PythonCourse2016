@@ -20,9 +20,6 @@ insertion_sort(c)
 
 
 def combine(x1, x2):
-	## example:
-	## x1 = [14, 33]
-	## x2 = [10, 27]
 	if len(x1) == 1 and len(x2) == 1:
 		if x1 < x2:
 			out = x1 + x2
@@ -44,14 +41,15 @@ def combine(x1, x2):
 def merge_sort(x):
 	if len(x) == 1:
 		return x
-	mid = len(x)/2
-	x1 = x[mid: ]
-	x2 = x[ :mid]
-	print x1
-	print x2
-	print " "
-	ms_x1 = merge_sort(x1)
-	ms_x2 = merge_sort(x2)
+	else:
+		mid = len(x)/2
+		x1 = x[mid: ]
+		x2 = x[ :mid]
+		x1 = merge_sort(x1)
+		x2 = merge_sort(x2)
+		return combine(x1, x2)
+	#print ms_x1
+	#print ms_x2
 	#combine(ms_x1, ms_x2)
 
 
