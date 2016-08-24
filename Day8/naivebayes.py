@@ -2,7 +2,7 @@
 # pip install nltk
 
 import nltk
-nltk.download('names')
+nltk.download('names') ## This needs to be true
 from nltk.corpus import names
 import random
 
@@ -65,11 +65,11 @@ for (name, tag) in devtest_names:
   guess = classifier.classify(gender_features(name))
   if guess != tag:
     errors.append( (tag, guess, name) )
-
     for (tag, guess, name) in sorted(errors):
       print 'correct=%-8s guess=%-8s name=%-30s' % (tag, guess, name)
 
-# yn seems to be female even though n seems to be male.  ch tends to be male even though h is female
+# yn seems to be female even though n seems to be male.
+## ch tends to be male even though h is female
 def gender_features(word):
   return {'suffix1': word[-1:],
           'suffix2': word[-2:]}
