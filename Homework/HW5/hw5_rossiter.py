@@ -3,8 +3,11 @@ class LinkedList(object):
 		self.head_node = Node(value)
 	def addNode(self, new_value):
 		new_node = Node(new_value)
-		self.head_node.next_node = new_node
-		return new_node
+		n = self.head_node
+		while n.next_node != None:
+			n = n.next_node
+		n.next_node
+		return self.addNodeAfter(new_value, n)
 	## needed to be able to have the node object created during initialization,
 	## so this function returns it for a user's use
 	def headNode(self):
@@ -12,12 +15,31 @@ class LinkedList(object):
 	def addNodeAfter(self, new_value, after_node):
 		new_node = Node(new_value, after_node.next_node)
 		after_node.next_node = new_node
-		return new_node, after_node
+		return new_node
 	def addNodeBefore(self, new_value, before_node):
 		n = self.head_node
 		while n.next_node != before_node:
 			n = n.next_node
-		self.addNodeAfter(new_value, n)
+		return self.addNodeAfter(new_value, n)
+	def removeNode(self, node_to_remove):
+		## search through the nodes
+		## that each node holds...
+		## until you find the one that 
+		## matches 'node_to_remove'
+		## THAT node gets what 'node_to_remove'
+		## was holding
+		n = self.head_node
+		while n.next_node != node_to_remove:
+			n = n.next_node
+		n.next_node = node_to_remove.next_node
+	def removeNodesByValue(self, value):
+		n = self.head_node
+		while n.next_node != None:
+			if n.value == value:
+				self.removeNode(n)
+			n = n.next_node
+		if n.value == value:
+			self.removeNode(n)
 	def length(self):
 		out = 1
 		n = self.head_node
@@ -54,6 +76,11 @@ node_2 = l.addNode(2)
 node_3 = l.addNodeAfter(3, node_2)
 node_7 = l.addNodeAfter(7, node_2)
 node_5 = l.addNodeBefore(5, node_2)
+node_5_b = l.addNodeBefore(5, node_7)
+node_5_c = l.addNodeAfter(5, node_3)
+l.removeNode(node_2)
+print l
+l.removeNodesByValue(5)
 
 
 
