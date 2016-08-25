@@ -1,3 +1,5 @@
+## Exception to catch when an empty list
+## is passed to either sort function
 class emptyListException(Exception):
   def __init__(self):
     Exception.__init__(self, "List must be non-empty.")
@@ -43,7 +45,6 @@ def combine(x1, x2):
 			else:
 				out.append(x2[i])
 	return out
-
 
 def merge_sort(x):
 	if len(x) == 0:

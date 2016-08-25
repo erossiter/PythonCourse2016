@@ -22,15 +22,6 @@ def sort_simulation(n, r):
 
 	return is_time, ms_time
 
-## This loop calls 'sort_simulation()' with an
-## increasing n.
-is_times = []
-ms_times = []
-for n in range(1, 100):
-	is_time, ms_time = sort_simulation(n, 1000)
-	is_times.append(is_time)
-	ms_times.append(ms_time)
-
 
 ## This loop calls 'sort_simulation()' 100 times
 ## for each n in order to average the time it
