@@ -40,6 +40,21 @@ class LinkedList(object):
 			n = n.next_node
 		if n.value == value:
 			self.removeNode(n)
+	def reverse(self):
+		def search(x):
+			n = self.head_node
+			if x == n:
+				s.next_node = None
+				return None
+			while n.next_node != x:
+				n = n.next_node
+				x.next_node = n
+				return search(n)
+		n = self.head_node
+		## moving the the end of the list
+		while n.next_node != None:
+			n = n.next_node
+		search(n)
 	def length(self):
 		out = 1
 		n = self.head_node
@@ -80,7 +95,7 @@ node_5_b = l.addNodeBefore(5, node_7)
 node_5_c = l.addNodeAfter(5, node_3)
 l.removeNode(node_2)
 print l
-l.removeNodesByValue(5)
+#l.removeNodesByValue(5)
 
 
 
