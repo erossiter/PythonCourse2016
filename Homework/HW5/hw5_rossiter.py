@@ -44,12 +44,12 @@ class LinkedList(object):
 		def search(x):
 			n = self.head_node
 			if x == n:
-				s.next_node = None
+				n.next_node = None
 				return None
 			while n.next_node != x:
 				n = n.next_node
-				x.next_node = n
-				return search(n)
+			x.next_node = n
+			return search(n)
 		n = self.head_node
 		## moving the the end of the list
 		while n.next_node != None:
@@ -67,7 +67,7 @@ class LinkedList(object):
 		n = self.head_node
 		while n.next_node != None:
 			print_list += str(n.value)
-			print_list += " "
+			print_list += ", "
 			n = n.next_node
 		print_list += str(n.value)
 		return print_list

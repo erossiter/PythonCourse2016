@@ -27,15 +27,13 @@ from sqlalchemy.orm import relationship, backref, sessionmaker
 print sqlalchemy.__version__
 
 #Connect to the local database, can use :memory: to just try it out in memory
-engine = sqlalchemy.create_engine('sqlite:////home/david/PythonCourse2016/Day9/books.db', echo=True)
+engine = sqlalchemy.create_engine('sqlite:////users/erinrossiter/Dropbox/Summer2016/pythoncourse2016/Day9/books.db', echo=True)
 
 Base = declarative_base() 
 
 #Define some schemas
 class Book(Base):
-  __tablename__ = 'books'
-#   __table_args__ = {'extend_existing': True}
-  
+  __tablename__ = 'books'  
   id = Column(Integer, primary_key=True)
   name = Column(String)
   main_character = Column(String)
@@ -54,8 +52,6 @@ class Book(Base):
 
 class Author(Base):
   __tablename__ = 'authors'
-#   __table_args__ = {'extend_existing': True}
-
   id = Column(Integer, primary_key=True)
   name = Column(String)
   books = relationship('Book', backref='author')
@@ -70,8 +66,6 @@ class Author(Base):
 
 class Country(Base):
   __tablename__ = 'countries'
-#   __table_args__ = {'extend_existing': True}
-  
   id = Column(Integer, primary_key=True)
   name = Column(String)
   capital = Column(String)
@@ -135,6 +129,7 @@ session.add(book2)
 book3=Book('tale of two cities')
 session.add(book3)
 
+## don't do it this way
 for book, author in session.query(Book, Author):
   print book.name, author.name
  
