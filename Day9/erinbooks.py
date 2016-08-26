@@ -40,7 +40,7 @@ class Book(Base):
   year = Column(Integer)
   
   author_id = Column(Integer, ForeignKey('authors.id'))
-  
+   
   def __init__(self, name, main_character=None, year=None):
     self.name = name
     self.main_character = main_character
