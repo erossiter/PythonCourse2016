@@ -124,18 +124,18 @@ print l
 ## to this node in function calls
 head_node = l.headNode()
 
-## addNode()
+## addNode() - complexity 'n'
 node_2 = l.addNode(2)
 node_3 = l.addNode(3)
 print "\nAdded 2, 3"
 print l #1, 2, 3
 
-## addNodeAfter()
+## addNodeAfter() - complexity 'n'
 node_7 = l.addNodeAfter(7, node_2)
 print "\nAdded 7 after 2"
 print l #1, 2, 7, 3
 
-## addNodeBefore()
+## addNodeBefore() - complexity 'n'
 node_1a = l.addNodeBefore(1, node_2)
 node_1b = l.addNodeBefore(1, node_1a)
 node_5a = l.addNodeBefore(5, node_2)
@@ -143,17 +143,17 @@ node_5b = l.addNodeBefore(5, node_7)
 print "\nAdded 1 before 2; 1 before 1; 5 before 2; and 5 before 7"
 print l #1, 1, 1, 5, 2, 5, 7, 3
 
-## removeNode()
+## removeNode() - complexity 'n'
 l.removeNode(node_2)
 print "\nRemoved 2"
 print l #1, 1, 1, 5, 5, 7, 3
 
-## removeNodesByValue()
+## removeNodesByValue() - complexity 'n^2'
 l.removeNodesByValue(5)
 print "\nRemoved all 5's"
 print l ##1, 1, 1, 7, 3
 
-## reverse()
+## reverse() - complexity 'n!' (not positive about this one)
 l.reverse()
 print "\nReversed list"
 print l #3, 7, 1, 1, 1
